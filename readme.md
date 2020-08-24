@@ -14,4 +14,5 @@ A simple discord bot writed in go
 
 ```ini
 disc_api = "string"
+myid = "string"
 ```
