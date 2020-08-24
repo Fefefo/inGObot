@@ -43,7 +43,7 @@ func main() {
 
 	fmt.Println("Bot online!")
 
-	bot.UpdateListeningStatus("「AHEGAO」🌸 DO THE AHEGAO 🌸")
+	bot.UpdateListeningStatus("🌸 DO THE AHEGAO 🌸") // ("「AHEGAO」🌸 DO THE AHEGAO 🌸")
 
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
@@ -160,8 +160,8 @@ func reactionAddForTheTheme(s *discordgo.Session, m *discordgo.MessageReactionAd
 	}
 	if len(msg.Embeds) > 0 && msg.Embeds[0].Title == "Anime themes" {
 		if num < len(msg.Embeds[0].Fields) {
-			s.MessageReactionsRemoveAll(m.ChannelID, msg.ID)
-			// s.ChannelMessageDelete(m.ChannelID, msg.ID)
+			// s.MessageReactionsRemoveAll(m.ChannelID, msg.ID)
+			s.ChannelMessageDelete(m.ChannelID, msg.ID)
 			s.ChannelMessageSend(m.ChannelID, "**"+msg.Embeds[0].Fields[num].Name+"**\n"+msg.Embeds[0].Fields[num].Value)
 		}
 	}
