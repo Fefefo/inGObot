@@ -91,7 +91,6 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate) {
 					}
 					msg, _ := s.ChannelMessageSendEmbed(m.ChannelID, &emb)
 					for i := range emb.Fields {
-						fmt.Println(i)
 						var emojiID string
 						switch i + 1 {
 						case 1:
@@ -136,8 +135,6 @@ func reactionAddForTheTheme(s *discordgo.Session, m *discordgo.MessageReactionAd
 		return
 	}
 	msg, _ := s.ChannelMessage(m.ChannelID, m.MessageID)
-	s.MessageReactionsRemoveAll(m.ChannelID, msg.ID)
-	// s.ChannelMessageDelete(m.ChannelID, msg.ID)
 	var num int
 	switch m.Emoji.Name {
 	case "1️⃣":
@@ -161,5 +158,11 @@ func reactionAddForTheTheme(s *discordgo.Session, m *discordgo.MessageReactionAd
 	case "🔟":
 		num = 9
 	}
-	s.ChannelMessageSend(m.ChannelID, "**"+msg.Embeds[0].Fields[num].Name+"**\n"+msg.Embeds[0].Fields[num].Value)
+	if len(msg.Embeds) > 0 && msg.Embeds[0].Title == "Anime themes" {
+		if num < len(msg.Embeds[0].Fields) {
+			s.MessageReactionsRemoveAll(m.ChannelID, msg.ID)
+			// s.ChannelMessageDelete(m.ChannelID, msg.ID)
+			s.ChannelMessageSend(m.ChannelID, "**"+msg.Embeds[0].Fields[num].Name+"**\n"+msg.Embeds[0].Fields[num].Value)
+		}
+	}
 }
